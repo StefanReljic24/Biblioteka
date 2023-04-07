@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Moja_Aplikacija.Entity.Genre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<input class="form-control" placeholder="pretraga" onkeyup="searchGenre(event,this.value)"; />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GenreId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GenreId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.GenreId  }) |
+                
+                @Html.ActionLink("Delete", "Delete", new {  id=item.GenreId },new {onclik = "return deleteGenre()"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        function deleteGenre(){
+            return confirm("Da li ste sigurni?")
+        }
+        function searchGenre(e,filter){
+            if(e.keyCode == 13){
+                window.location.href = "/Genre/Index?filter=" + filter;
+            }
+        }
+    </script>
+}
